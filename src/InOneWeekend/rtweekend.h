@@ -1,13 +1,5 @@
 #ifndef RTWEEKEND_H
 #define RTWEEKEND_H
-//==============================================================================================
-// To the extent possible under law, the author(s) have dedicated all copyright and related and
-// neighboring rights to this software to the public domain worldwide. This software is
-// distributed without any warranty.
-//
-// You should have received a copy (see file COPYING.txt) of the CC0 Public Domain Dedication
-// along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
-//==============================================================================================
 
 #include <cmath>
 #include <cstdlib>
@@ -34,13 +26,14 @@ inline double degrees_to_radians(double degrees) {
     return degrees * pi / 180.0;
 }
 
+
+// Returns a random real in [0,1).
 inline double random_double() {
-    // Returns a random real in [0,1).
     return std::rand() / (RAND_MAX + 1.0);
 }
 
+// Returns a random real in [min,max).
 inline double random_double(double min, double max) {
-    // Returns a random real in [min,max).
     return min + (max-min)*random_double();
 }
 
