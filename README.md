@@ -1,1 +1,1 @@
-![](https://github.com/asli-nobita/ray-tracer/blob/main/diffuse_materials.ppm)
+![](https://drive.google.com/file/d/19PiGIXNympaKos4OMzVW6WuYjuw7YddI/view?usp=sharing)
