@@ -9,9 +9,9 @@ class sphere : public hittable {
     bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
         vec3 oc = center-r.origin();
         vec3 d = r.direction();
-        double a = d.length()*d.length();
+        double a = d.length_squared();
         double h = dot(d, oc);      // put h=-b/2
-        double c = oc.length()*oc.length()-radius*radius;
+        double c = oc.length_squared()-radius*radius;
         auto discriminant = h*h-a*c;
         if (discriminant<0) {
             return false;
