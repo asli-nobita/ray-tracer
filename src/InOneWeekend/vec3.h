@@ -129,4 +129,13 @@ inline vec3 reflect(const vec3& v,const vec3& normal) {
     return v-2*b; 
 }
 
+// returns refracted ray from medium i to medium r 
+// etai over etar represents the ratio of refractive indices of medium i and medium r
+inline vec3 refract(const vec3& uv,const vec3& n,double etai_over_etar) { 
+    auto cos_theta = std::fmin(dot(-uv,n),1.0);     // here cos_theta is actually |R|*costheta
+    vec3 rout_perp = etai_over_etar*(uv+cos_theta*n); 
+    vec3 rout_parallel = -std::sqrt(std::fabs(1-rout_perp.length_squared()))*n; 
+    return rout_perp + rout_parallel; 
+}
+
 #endif

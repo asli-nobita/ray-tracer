@@ -3,7 +3,7 @@
 
 class material;
 
-// details of a hit 
+// details of a hit e ca
 class hit_record {
     public:
     point3 p;
