@@ -1,3 +1,3 @@
 <p align="center">  
-<img src="https://github.com/asli-nobita/ray-tracer/blob/main/.assets/diffuse_materials.jpg?raw=true">
+<img src="https://github.com/asli-nobita/ray-tracer/blob/main/.assets/dielectric.jpg?raw=true">
 </p>
