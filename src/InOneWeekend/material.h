@@ -24,7 +24,7 @@ class lambertian : public material {
             scatter_direction = rec.normal;
         }
         scattered = ray(rec.p, scatter_direction);
-        attenuation = albedo;
+        attenuation = albedo;       // what fraction of color a material absorbs
         return true;
     }
     private:
@@ -49,20 +49,40 @@ class metal : public material {
 
 class dielectric : public material {
     public:
-    dielectric(double refractive_index) : refractive_index(refractive_index) { }
+    dielectric(double refractive_index) : refractive_index(refractive_index) { }    // here, refractive index is actually ri of material / ri of surrounding medium
 
     bool scatter(const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered) const override {
         attenuation = color(1, 1, 1);
-        double ri = rec.front_face ? 1.0/refractive_index : refractive_index;   // doubt: how do we specify new ri if dielectric is placed in a non-air medium? 
+        double ri = rec.front_face ? 1.0/refractive_index : refractive_index;   
         vec3 unit_direction = unit_vector(r_in.direction());
-        vec3 refracted = refract(unit_direction, rec.normal, ri);
-        scattered = ray(rec.p, refracted); 
-        return true; 
+
+        // check if total internal reflection would occur 
+        double cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);
+        double sin_theta = std::sqrt(1-cos_theta*cos_theta);
+
+        bool cannot_refract = ri*sin_theta > 1.0; 
+        vec3 direction;
+        if (cannot_refract || reflectance(cos_theta, ri)) {
+            direction = reflect(unit_direction, rec.normal);
+        }
+        else {
+            direction = refract(unit_direction, rec.normal, ri);
+        }
+
+        scattered = ray(rec.p, direction);
+        return true;
     }
     private:
     // Refractive index in vacuum or air, or the ratio of the material's refractive index over
     // the refractive index of the enclosing media
-    double refractive_index;
+    double refractive_index; 
+
+    // Calculates reflectance using Schlick's approximation 
+    static double reflectance(double cosine, double refractive_index) { 
+        auto r0 = (1-refractive_index)/(1+refractive_index); 
+        r0 = r0*r0; 
+        return r0 + (1-r0)*std::pow((1-cosine),5); 
+    }
 };
 
 #endif
