@@ -114,6 +114,13 @@ inline vec3 random_unit_vector() {
     }
 } 
 
+inline vec3 random_in_unit_disk() { 
+    while(true) { 
+        auto p=vec3(random_double(-1,1),random_double(-1,1),0); 
+        if(p.length_squared()<1) return p; 
+    }
+}
+
 // ensures the unit vector lies on the correct side of the sphere 
 inline vec3 random_on_hemisphere(const vec3& normal) { 
     vec3 on_unit_sphere=random_unit_vector(); 

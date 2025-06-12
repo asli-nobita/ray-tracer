@@ -25,10 +25,13 @@ int main() {
     cam.samples_per_pixel = 100;               // increase this for a higher quality image  
     cam.max_depth         = 50;
 
-    cam.vfov              = 90;
+    cam.vfov              = 20;
     cam.lookfrom          = point3(-2,2,1);    // camera position
     cam.lookat            = point3(0,0,-1);    // focus position
-    cam.vup               = vec3(0,1,0); 
+    cam.vup               = vec3(0,1,0);       
+
+    cam.defocus_angle     = 0;                 // increase for defocus blur (depth of field)
+    cam.focus_distance    = 3.4;               // control which objects appear blurred
     
     cam.render(world);
 }
